@@ -18,6 +18,14 @@ type DataReturned =
       message: string;
       createdAt: string;
     }
+  | {
+      id: number;
+      name: string;
+      email: string;
+      phone: string | null;
+      message: string;
+      createdAt: string;
+    }[]
   | { error: string };
 
 export default async function handler(
@@ -52,6 +60,26 @@ export default async function handler(
       else res.status(500).json({ error: "Unknown error" });
     }
   } else {
-    res.status(405).json({ error: "Method not allowed" });
+    const contacts = await prisma.contact.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        message: true,
+        createdAt: true,
+      },
+    });
+
+    res.status(405).json(
+      contacts.map((contact) => ({
+        id: contact.id,
+        name: contact.name,
+        email: contact.email,
+        phone: contact.phone,
+        message: contact.message,
+        createdAt: contact.createdAt.toISOString(),
+      }))
+    );
   }
 }

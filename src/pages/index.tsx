@@ -102,7 +102,11 @@ export default function Home() {
 
   function handleCreateContact(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    createContact(data).then((res) => console.log(res));
+    createContact(data).then(({ data }) => {
+      alert(
+        `A demonstração foi enviada para ${data.email} por email. Vejo você por lá!`
+      );
+    });
   }
 
   return (
@@ -181,6 +185,14 @@ export default function Home() {
                 placeholder="Message"
               />
               <button>Veja como é criar seu cardápio conosco</button>
+              <div className={styles.contactDetails}>
+                <span>
+                  <strong>admin@struct.unb.br</strong>
+                </span>
+                <span>
+                  <strong>+55 61 99999-9999</strong>
+                </span>
+              </div>
             </form>
           </div>
         </section>
