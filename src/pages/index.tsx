@@ -1,14 +1,109 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import styles from "@/styles/Home.module.css";
+import { FormEvent, useEffect, useState } from "react";
+import { createContact } from "@/clientApi/createContact";
+import { exampleImages } from "./_exampleImages";
+import Image from "next/image";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["400", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
+
+function ExampleImages() {
+  const [XSpacing, setXSpacing] = useState(50);
+  const [YSpacing, setYSpacing] = useState(75);
+
+  useEffect(() => {
+    function checkWidth() {
+      if (window.innerWidth < 1400) {
+        setXSpacing(50);
+        setYSpacing(75);
+      } else {
+        setXSpacing(200);
+        setYSpacing(150);
+      }
+    }
+
+    window.addEventListener("resize", checkWidth);
+
+    checkWidth();
+
+    return () => window.removeEventListener("resize", checkWidth);
+  }, []);
+
+  function leftDisl(i: number) {
+    return ((exampleImages.length - 1) / 2 - i) * XSpacing;
+  }
+
+  function topDisl(i: number) {
+    return ((exampleImages.length - 1) / 2 - i) * YSpacing;
+  }
+
+  return (
+    <div
+      className={styles.exampleImages}
+      style={{ height: 200 + YSpacing * (exampleImages.length - 1) }}
+    >
+      <ul>
+        {exampleImages.map((img, i) => (
+          <li
+            style={{
+              position: "absolute",
+              left: `calc(50% ${leftDisl(i) < 0 ? "+" : "-"} ${Math.abs(
+                leftDisl(i)
+              )}px)`,
+              translate: "-50% -50%",
+              top: `calc(50% ${topDisl(i) >= 0 ? "+" : "-"} ${Math.abs(
+                topDisl(i)
+              )}px)`,
+            }}
+            key={i}
+          >
+            <Image width={300} height={200} src={img.src} alt={img.alt} />
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const whyUs = [
+  {
+    title: "Fácil de usar",
+    description:
+      "Nosso sistema é fácil de usar, você pode criar seu cardápio em poucos cliques.",
+  },
+  {
+    title: "Fácil de manter",
+    description:
+      "Altere seu cardápio quando quiser, sem precisar de conhecimento técnico.",
+  },
+  {
+    title: "Ótima customabilidade",
+    description:
+      "Altere as cores, imagens e tipografia do template facilmente.",
+  },
+  {
+    title: "Personalize ainda mais",
+    description:
+      "Entre em contato conosco para criar um cardápio totalmente personalizado.",
+  },
+];
 
 export default function Home() {
-  const data = {
-    name: "opas",
-  };
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  function handleCreateContact(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    createContact(data).then((res) => console.log(res));
+  }
 
   return (
     <>
@@ -18,8 +113,88 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <section>{data.name}</section>
+      <main className={`${styles.main} ${poppins.className}`}>
+        <section className={styles.section1}>
+          <div>
+            <h1 className={styles.h1}>
+              Quer um
+              <br />
+              <span>
+                cardápio
+                <br />
+                delicioso?
+              </span>
+            </h1>
+            <p>Criar e manter um cardápio nunca foi tão fácil!</p>
+            <ExampleImages />
+          </div>
+          <div>
+            <form className={styles.form} onSubmit={handleCreateContact}>
+              <h2 className={styles.h2}>
+                Preencha os campos e receba uma <span>demonstração</span>
+              </h2>
+              <input
+                type="text"
+                name="name"
+                value={data.name}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    name: e.target.value,
+                  }))
+                }
+                placeholder="Name"
+              />
+              <input
+                type="email"
+                name="email"
+                value={data.email}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    email: e.target.value,
+                  }))
+                }
+                placeholder="Email"
+              />
+              <input
+                type="text"
+                name="phone"
+                value={data.phone}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    phone: e.target.value,
+                  }))
+                }
+                placeholder="Phone"
+              />
+              <textarea
+                name="message"
+                value={data.message}
+                onChange={(e) =>
+                  setData((d) => ({
+                    ...d,
+                    message: e.target.value,
+                  }))
+                }
+                placeholder="Message"
+              />
+              <button>Veja como é criar seu cardápio conosco</button>
+            </form>
+          </div>
+        </section>
+        <section className={styles.section2}>
+          <h2 className={`${styles.h2}`}>Por que fazer conosco?</h2>
+          <ul className={styles.whyUs}>
+            {whyUs.map((item, i) => (
+              <li key={i}>
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
     </>
   );
