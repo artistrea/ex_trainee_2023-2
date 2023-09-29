@@ -13,8 +13,6 @@ export default async function handler(
 ) {
   const session = await getServerSession(req, res, authOptions);
 
-  console.log("session after auth", session);
-
   if (!session) return res.status(401).redirect("/");
 
   if (session.user.role === "super_admin")

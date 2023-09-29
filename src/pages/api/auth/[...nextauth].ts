@@ -36,7 +36,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     session({ session, user }) {
-      console.log("user", user);
       if (session.user) session.user.role = user.role;
       return session;
     },
