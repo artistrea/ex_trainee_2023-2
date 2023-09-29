@@ -2,6 +2,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../prisma";
 import { PrismaClientValidationError } from "@prisma/client/runtime/library";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
 // id        Int      @id @default(autoincrement())
 //   name      String
 //   email     String
@@ -45,7 +47,6 @@ export default async function handler(
         },
       });
 
-      console.log(name, email, phone, message);
       res.status(200).json({
         id: createdContact.id,
         name: createdContact.name,
@@ -60,6 +61,11 @@ export default async function handler(
       else res.status(500).json({ error: "Unknown error" });
     }
   } else {
+    const session = await getServerSession(req, res, authOptions);
+
+    if (!session || !session.user || session.user.role !== "super_admin")
+      return res.status(401).json({ error: "Unauthorized" });
+
     const contacts = await prisma.contact.findMany({
       select: {
         id: true,
@@ -69,9 +75,12 @@ export default async function handler(
         message: true,
         createdAt: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
-    res.status(405).json(
+    res.status(200).json(
       contacts.map((contact) => ({
         id: contact.id,
         name: contact.name,

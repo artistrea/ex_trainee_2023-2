@@ -4,5 +4,5 @@ import axios, { AxiosPromise } from "axios";
 export function createContact(
   data: Prisma.ContactCreateInput
 ): AxiosPromise<Prisma.ContactCreateInput> {
-  return axios.post("/api/contact", data);
+  return axios.post("/api/contacts", data);
 }

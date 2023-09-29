@@ -1,9 +1,13 @@
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import styles from "./Navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export function NavBar() {
+  const { data: session } = useSession();
+  const router = useRouter();
+
   return (
     <nav className={styles.nav}>
       <div>
@@ -20,10 +24,11 @@ export function NavBar() {
         style={{ cursor: "pointer" }}
         onClick={(e) => {
           e.preventDefault();
-          signIn("google");
+          if (!session) signIn("google");
+          else router.push("/api/after_auth");
         }}
       >
-        Já sou cliente!
+        {!session ? "Já sou cliente!" : "Ver dashboard"}
       </a>
     </nav>
   );

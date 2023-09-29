@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
     },
 
     redirect() {
-      return Promise.resolve("/dashboard");
+      return Promise.resolve("/api/after_auth");
     },
   },
 };
