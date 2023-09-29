@@ -7,6 +7,8 @@
 
   --clr-text-primary: var(--clr-background);
   --clr-text-accent: var(--clr-background);
+
+  scroll-behavior: smooth;
 }
 
 body {
@@ -44,4 +46,5 @@ button {
   border-radius: 99vmax;
   font-weight: 600;
   padding: 1rem 2rem;
+  cursor: pointer;
 }

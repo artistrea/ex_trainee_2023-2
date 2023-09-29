@@ -1,15 +1,10 @@
 import Head from "next/head";
-import { Inter, Poppins } from "next/font/google";
+import { Poppins } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import { FormEvent, useEffect, useState } from "react";
 import { createContact } from "@/clientApi/createContact";
 import { exampleImages } from "./_exampleImages";
 import Image from "next/image";
-
-const poppins = Poppins({
-  weight: ["400", "600", "700", "800", "900"],
-  subsets: ["latin"],
-});
 
 function ExampleImages() {
   const [XSpacing, setXSpacing] = useState(50);
@@ -117,8 +112,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${poppins.className}`}>
-        <section className={styles.section1}>
+      <main className={styles.main}>
+        <section id="contact" className={styles.section1}>
           <div>
             <h1 className={styles.h1}>
               Quer um
@@ -196,7 +191,7 @@ export default function Home() {
             </form>
           </div>
         </section>
-        <section className={styles.section2}>
+        <section id="whyUs" className={styles.section2}>
           <h2 className={`${styles.h2}`}>Por que fazer conosco?</h2>
           <ul className={styles.whyUs}>
             {whyUs.map((item, i) => (

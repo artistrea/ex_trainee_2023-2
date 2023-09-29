@@ -1,0 +1,23 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 2rem;
+  background-color: var(--clr-secondary);
+}
+
+.navMid {
+  display: none;
+}
+
+@media screen and (min-width: 500px) {
+  .navMid {
+    display: flex;
+    gap: 2rem;
+  }
+}
+
+.navMid a {
+  color: var(--clr-primary);
+  text-decoration: none;
+}

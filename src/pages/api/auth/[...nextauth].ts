@@ -1,6 +1,6 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
-import { PrismaAdapter } from "@auth/prisma-adapter";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../../prisma";
 
 function googleCallback(profile: GoogleProfile) {
@@ -14,6 +14,16 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+
+      profile(profile, tkns) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: profile.role || "admin",
+        };
+      },
     }),
     // ...add more providers here
   ],
@@ -23,6 +33,16 @@ export const authOptions: NextAuthOptions = {
         return googleCallback(profile as GoogleProfile);
       }
       return true; // Do different verification for other providers that don't have `email_verified`
+    },
+
+    session({ session, user }) {
+      console.log("user", user);
+      if (session.user) session.user.role = user.role;
+      return session;
+    },
+
+    redirect() {
+      return Promise.resolve("/dashboard");
     },
   },
 };
