@@ -12,7 +12,10 @@ function ExampleImages() {
 
   useEffect(() => {
     function checkWidth() {
-      if (window.innerWidth < 1400) {
+      if (window.innerWidth < 900) {
+        setXSpacing(12.5);
+        setYSpacing(50);
+      } else if (window.innerWidth < 1400) {
         setXSpacing(50);
         setYSpacing(75);
       } else {

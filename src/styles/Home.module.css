@@ -4,7 +4,7 @@
 
 .section1 {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   min-height: 90vh;
 }
 
@@ -84,11 +84,6 @@
   display: none;
 }
 
-.struct {
-  color: var(--clr-primary);
-  font-weight: 600;
-}
-
 .section2 {
   padding: var(--section-padding);
 }
@@ -132,9 +127,13 @@
   font-weight: 600;
 }
 
-@media (min-width: 940px) {
+@media (min-width: 850px) {
   .main {
     --section-padding: 2rem 4rem;
+  }
+
+  .section1 {
+    flex-direction: row;
   }
 
   .exampleImages {
@@ -162,7 +161,7 @@
 
 @media (min-width: 1300px) {
   .main {
-    --section-padding: 2rem calc(2vw + 8rem);
+    --section-padding: 2rem calc(3.5vw + 8rem);
   }
 
   .section1 > *:not(:first-child) {
@@ -173,12 +172,4 @@
     padding-block: 8rem;
     padding-inline: 2rem;
   }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 100%;
-  background-color: blue;
 }
