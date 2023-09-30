@@ -3,8 +3,19 @@ import GoogleProvider, { GoogleProfile } from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import prisma from "../../../../prisma";
 
-function googleCallback(profile: GoogleProfile) {
-  return profile.email_verified && profile.email.endsWith("@struct.unb.br");
+async function googleCallback(profile: GoogleProfile) {
+  const canLogIn = await prisma.canLogIn
+    .findUnique({
+      where: {
+        email: profile.email,
+      },
+    })
+    .catch(() => false);
+
+  if (canLogIn || profile.email.endsWith("@struct.unb.br")) {
+    return profile.email_verified;
+  }
+  return false;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -15,13 +26,15 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
 
-      profile(profile, tkns) {
+      profile(profile) {
         return {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          role: profile.role || "admin",
+          role: profile.email.endsWith("@struct.unb.br")
+            ? "super_admin"
+            : profile.role || "admin",
         };
       },
     }),
@@ -30,7 +43,7 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       if (account?.provider === "google") {
-        return googleCallback(profile as GoogleProfile);
+        return await googleCallback(profile as GoogleProfile);
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },

@@ -17,18 +17,44 @@
 
 .section {
   padding: var(--section-padding);
+  display: flex;
+  flex-direction: column;
 }
 
 .details summary {
   cursor: pointer;
   padding: 0.5rem 1rem;
+  display: flex;
 }
 
 .details {
   background-color: #eee;
 }
 
-.details div {
+.details > div {
   padding: 0.5rem 1rem;
   background-color: var(--clr-secondary);
+}
+
+.center {
+  margin-inline: auto;
+}
+
+.navMain,
+.navMain > nav,
+.navMain > nav > ul {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.navMain > nav > ul {
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.navMain > nav > ul > li > * {
+  display: block;
+  padding: 1rem;
+  background-color: var(--clr-secondary);
+  text-decoration: none;
 }

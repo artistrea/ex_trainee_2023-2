@@ -5,7 +5,7 @@ import { useContacts } from "@/clientApi/useContacts";
 import GoBack from "@/components/GoBack";
 
 export default function ContactsPage() {
-  const { contacts } = useContacts((err) => {
+  const { data: contacts } = useContacts((err) => {
     alert(err);
   });
 
@@ -20,7 +20,12 @@ export default function ContactsPage() {
               <li key={c.id}>
                 <details className={styles.details}>
                   <summary>
-                    {c.name} - {c.email} - {c.phone}
+                    {c.name} - {c.email} - {c.phone}{" "}
+                    <div style={{ marginLeft: "auto" }}>
+                      {new Date(c.createdAt).toLocaleString("pt-BR", {
+                        timeZone: "America/Sao_Paulo",
+                      })}
+                    </div>
                   </summary>
                   <div>
                     <p>{c.message}</p>

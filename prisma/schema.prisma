@@ -19,6 +19,40 @@ model Contact {
   createdAt DateTime @default(now())
 }
 
+model Restaurant {
+  id          Int    @id @default(autoincrement())
+  slug        String @unique
+  name        String
+  description String
+
+  menu     Menu[]
+  canLogIn CanLogIn[]
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+
+  menuItems    MenuItem[]
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurantId Int
+}
+
+model MenuItem {
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Float
+
+  menu   Menu @relation(fields: [menuId], references: [id])
+  menuId Int
+}
+
+model CanLogIn {
+  email String @id
+
+  restaurantId Int
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
 // MAGIA DO NEXTAUTH
 
 model Account {

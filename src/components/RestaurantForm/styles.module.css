@@ -1,0 +1,19 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-inline: auto;
+}
+
+.form label {
+  padding-top: 1rem;
+  color: var(--clr-accent);
+}
+
+.form input,
+.form textarea {
+  background-color: var(--clr-secondary);
+}
+
+.form button {
+  margin-top: 2rem;
+}

@@ -4,31 +4,14 @@ import prisma from "../../../prisma";
 import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
-// id        Int      @id @default(autoincrement())
-//   name      String
-//   email     String
-//   phone     String?
-//   message   String
-//   createdAt DateTime @default(now())
+import { Contact } from "@prisma/client";
 
-type DataReturned =
-  | {
-      id: number;
-      name: string;
-      email: string;
-      phone: string | null;
-      message: string;
-      createdAt: string;
-    }
-  | {
-      id: number;
-      name: string;
-      email: string;
-      phone: string | null;
-      message: string;
-      createdAt: string;
-    }[]
-  | { error: string };
+export type RouteOutput = {
+  POST: Omit<Contact, "createdAt"> & { createdAt: string };
+  GET: (Omit<Contact, "createdAt"> & { createdAt: string })[];
+};
+
+type DataReturned = RouteOutput[keyof RouteOutput] | { error: string };
 
 export default async function handler(
   req: NextApiRequest,
