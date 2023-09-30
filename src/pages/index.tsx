@@ -198,7 +198,9 @@ export default function Home() {
                 }
                 placeholder="Message"
               />
-              <button>Veja como é criar seu cardápio conosco</button>
+              <button className="btn">
+                Veja como é criar seu cardápio conosco
+              </button>
               <div className={styles.contactDetails}>
                 <span>
                   <strong>admin@struct.unb.br</strong>

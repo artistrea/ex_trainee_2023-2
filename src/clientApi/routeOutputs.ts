@@ -1,7 +1,10 @@
 import { RouteOutput as ContactRouteOutput } from "@/pages/api/contacts";
 import { RouteOutput as RestaurantRouteOutput } from "@/pages/api/restaurants";
+import { RouteOutput as RestaurantSlugRouteOutput } from "@/pages/api/restaurants/[slug]";
 
 export type RoutesOutput = {
   contacts: ContactRouteOutput;
-  restaurants: RestaurantRouteOutput;
+  restaurants: RestaurantRouteOutput & {
+    slug: RestaurantSlugRouteOutput;
+  };
 };

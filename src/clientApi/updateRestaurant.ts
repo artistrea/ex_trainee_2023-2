@@ -4,6 +4,6 @@ import axios, { AxiosPromise } from "axios";
 
 export function updateRestaurant(
   data: Prisma.RestaurantCreateWithoutMenuInput
-): AxiosPromise<RoutesOutput["restaurants"]["POST"]> {
+): AxiosPromise<RoutesOutput["restaurants"]["PATCH"]> {
   return axios.patch("/api/restaurants", data);
 }

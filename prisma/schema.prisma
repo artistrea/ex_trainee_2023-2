@@ -25,25 +25,34 @@ model Restaurant {
   name        String
   description String
 
-  menu     Menu[]
+  menu     Menu?
   canLogIn CanLogIn[]
 }
 
 model Menu {
   id Int @id @default(autoincrement())
 
-  menuItems    MenuItem[]
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
-  restaurantId Int
+  categories   MenuCategory[]
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id])
+  restaurantId Int            @unique
 }
 
-model MenuItem {
+model MenuCategory {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  items  CategoryItem[]
+  menu   Menu?          @relation(fields: [menuId], references: [id])
+  menuId Int?
+}
+
+model CategoryItem {
   id    Int    @id @default(autoincrement())
   name  String
   price Float
 
-  menu   Menu @relation(fields: [menuId], references: [id])
-  menuId Int
+  category   MenuCategory? @relation(fields: [categoryId], references: [id])
+  categoryId Int?
 }
 
 model CanLogIn {

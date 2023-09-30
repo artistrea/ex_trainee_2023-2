@@ -19,56 +19,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return { props: { session } };
 };
 
-function EnterRestaurantInput() {
-  const { data: restaurants } = useRestaurants((err) => {
-    alert(err);
-  });
-
-  const [selectedId, setSelectedId] = useState<number | null>(null);
-
-  return (
-    <>
-      <label style={{ display: "flex" }} htmlFor="restaurantName">
-        Entre no Restaurante:
-        <Link
-          href={{
-            pathname: "/admin/[restaurantId]",
-            query: { restaurantId: selectedId },
-          }}
-          style={{
-            marginLeft: "auto",
-            pointerEvents: selectedId ? "initial" : "none",
-            color: selectedId ? "var(--clr-primary)" : "initial",
-          }}
-          aria-disabled={!selectedId}
-        >
-          <ArrowRightSquare />
-        </Link>
-      </label>
-      <input
-        placeholder="Nome do Restaurante"
-        style={{
-          background: "var(--clr-accent)",
-          color: "var(--clr-background)",
-        }}
-        name="restaurantName"
-        id="restaurantName"
-        list="restaurants"
-        onChange={(e) => {
-          setSelectedId(
-            restaurants.find((r) => r.name === e.target.value)?.id ?? null
-          );
-        }}
-      />
-      <datalist style={{ display: "none" }} id="restaurants">
-        {restaurants.map((r) => (
-          <option key={r.id} value={r.name} />
-        ))}
-      </datalist>
-    </>
-  );
-}
-
 export default function SuperAdminPage() {
   return (
     <main className={styles.navMain}>
@@ -79,9 +29,6 @@ export default function SuperAdminPage() {
           </li>
           <li>
             <Link href="/super_admin/restaurants">Restaurantes Clientes</Link>
-          </li>
-          <li>
-            <EnterRestaurantInput />
           </li>
         </ul>
       </nav>

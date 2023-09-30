@@ -46,11 +46,19 @@ textarea {
 }
 
 button {
-  background-color: var(--clr-primary);
-  color: var(--clr-text-primary);
   border: none;
   border-radius: 99vmax;
   font-weight: 600;
   padding: 1rem 2rem;
   cursor: pointer;
+}
+
+.btn {
+  background-color: var(--clr-primary);
+  color: var(--clr-text-primary);
+}
+
+*:disabled button {
+  opacity: 0.5;
+  cursor: initial;
 }

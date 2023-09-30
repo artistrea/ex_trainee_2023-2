@@ -34,6 +34,7 @@ function CreateRestaurantPage() {
           }}
           restaurant={restaurant}
           setRestaurant={setRestaurant}
+          submitText="Criar"
         />
       </section>
     </main>
