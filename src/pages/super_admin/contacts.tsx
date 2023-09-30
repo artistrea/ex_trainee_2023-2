@@ -2,6 +2,7 @@ export { getServerSideProps } from "./";
 
 import styles from "@/styles/Admin.module.css";
 import { useContacts } from "@/clientApi/useContacts";
+import GoBack from "@/components/GoBack";
 
 export default function ContactsPage() {
   const { contacts } = useContacts((err) => {
@@ -11,6 +12,7 @@ export default function ContactsPage() {
   return (
     <main className={styles.main}>
       <section className={styles.section}>
+        <GoBack style={{ margin: "1rem 0" }} />
         <h1 className={styles.h1}>Entraram em Contato:</h1>
         <ul>
           {contacts.map((c) => {
