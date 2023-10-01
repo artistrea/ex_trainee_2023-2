@@ -25,31 +25,29 @@ model Restaurant {
   name        String
   description String
 
-  menuPages MenuPage[]
-  canLogIn  CanLogIn[]
-  user      User[]
+  menu     Menu?
+  canLogIn CanLogIn[]
+  user     User[]
 }
 
-model MenuPage {
-  id             Int    @id @default(autoincrement())
-  title          String
-  className      String @default("normal")
-  titleClassName String @default("normalBase")
+model Menu {
+  id        Int    @id @default(autoincrement())
+  className String @default("normal")
 
-  categories   MenuPageCategory[]
-  restaurant   Restaurant         @relation(fields: [restaurantId], references: [id])
-  restaurantId Int
+  categories   MenuCategory[]
+  restaurant   Restaurant     @relation(fields: [restaurantId], references: [id])
+  restaurantId Int            @unique
 }
 
-model MenuPageCategory {
+model MenuCategory {
   id             Int     @id @default(autoincrement())
   title          String
   titleClassName String  @default("normal")
   description    String?
 
-  items    CategoryItem[]
-  menuPage MenuPage?      @relation(fields: [menuId], references: [id])
-  menuId   Int?
+  items  CategoryItem[]
+  menu   Menu?          @relation(fields: [menuId], references: [id])
+  menuId Int?
 }
 
 model CategoryItem {
@@ -59,7 +57,7 @@ model CategoryItem {
   description  String
   className    String @default("normal")
 
-  category   MenuPageCategory? @relation(fields: [categoryId], references: [id])
+  category   MenuCategory? @relation(fields: [categoryId], references: [id])
   categoryId Int?
 }
 
