@@ -8,6 +8,10 @@
   min-height: 90vh;
 }
 
+.section1 p {
+  letter-spacing: 0.5px;
+}
+
 .section1 > * {
   flex: 1 1 50%;
 }
@@ -62,10 +66,12 @@
 .h1 {
   padding-bottom: 1rem;
   font-size: clamp(1.5rem, 1.5rem + 1.5vw, 3rem);
+  letter-spacing: -3px;
 }
 
 .h2 {
   font-size: clamp(1.2rem, 1rem + 1.5vw, 1.8rem);
+  letter-spacing: -1px;
 }
 
 .h2 span {
@@ -95,6 +101,12 @@
   padding-block: 1rem 2rem;
 }
 
+.section2 p {
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+}
+
 .section2 h2 {
   text-decoration: underline 3px var(--clr-accent);
   text-align: center;
@@ -105,14 +117,16 @@
 .whyUs {
   list-style: none;
   display: grid;
+  gap: 4rem;
   grid-template-columns: 1fr;
-  max-width: 60rem;
+  max-width: 70rem;
   margin-inline: auto;
 }
 
 .whyUs li {
   padding: 1.5rem;
-  margin: 1rem;
+  max-width: 30rem;
+  margin-inline: auto;
   position: relative;
   background-color: var(--clr-accent);
   border-radius: 6px;
