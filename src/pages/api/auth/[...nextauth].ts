@@ -26,15 +26,28 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
 
-      profile(profile) {
+      async profile(profile: GoogleProfile) {
+        const restaurantInfo = await prisma.canLogIn
+          .findUnique({
+            where: {
+              email: profile.email,
+            },
+            select: {
+              restaurantId: true,
+            },
+          })
+          .catch(() => null);
+
         return {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
+          emailVerified: null,
           image: profile.picture,
           role: profile.email.endsWith("@struct.unb.br")
             ? "super_admin"
             : profile.role || "admin",
+          restaurantId: restaurantInfo?.restaurantId ?? null,
         };
       },
     }),
@@ -48,8 +61,21 @@ export const authOptions: NextAuthOptions = {
       return true; // Do different verification for other providers that don't have `email_verified`
     },
 
-    session({ session, user }) {
+    async session({ session, user }) {
       if (session.user) session.user.role = user.role;
+      if (session.user)
+        session.user.restaurantSlug =
+          (
+            await prisma.restaurant.findUnique({
+              where: {
+                id: user.restaurantId ?? undefined,
+              },
+              select: {
+                slug: true,
+              },
+            })
+          )?.slug || null;
+
       return session;
     },
 

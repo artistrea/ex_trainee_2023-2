@@ -27,6 +27,7 @@ model Restaurant {
 
   menu     Menu?
   canLogIn CanLogIn[]
+  User     User[]
 }
 
 model Menu {
@@ -38,8 +39,10 @@ model Menu {
 }
 
 model MenuCategory {
-  id   Int    @id @default(autoincrement())
-  name String
+  id             Int     @id @default(autoincrement())
+  title          String
+  titleClassName String  @default("normal")
+  description    String?
 
   items  CategoryItem[]
   menu   Menu?          @relation(fields: [menuId], references: [id])
@@ -47,9 +50,11 @@ model MenuCategory {
 }
 
 model CategoryItem {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Float
+  id           Int    @id @default(autoincrement())
+  name         String
+  priceInCents Int
+  description  String
+  className    String @default("normal")
 
   category   MenuCategory? @relation(fields: [categoryId], references: [id])
   categoryId Int?
@@ -98,8 +103,12 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String    @default("admin")
-  accounts      Account[]
-  sessions      Session[]
+
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId Int?
+
+  accounts Account[]
+  sessions Session[]
 }
 
 model VerificationToken {

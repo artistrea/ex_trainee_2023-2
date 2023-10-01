@@ -104,7 +104,7 @@ export default function AdminRestaurant({
               <Link
                 href={{
                   pathname: "/admin/[restaurantSlug]/menu",
-                  query: { restaurantSlug: restaurant.id },
+                  query: { restaurantSlug: restaurant.slug },
                 }}
               >
                 Editar o cardápio

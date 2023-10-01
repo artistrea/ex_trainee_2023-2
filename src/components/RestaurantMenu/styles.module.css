@@ -1,0 +1,35 @@
+.defaultStyles {
+  --_menu-clr-bg: #fff;
+  --_menu-clr-text: #000;
+  --_menu-clr-accent: #0aa;
+}
+
+.defaultStyles ul {
+  list-style: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--__menu-clr-bg);
+  padding: 3rem;
+}
+
+.normal {
+  color: var(--_menu-clr-text);
+  background-color: var(--_menu-clr-bg);
+}
+
+.accentedBg {
+  color: var(--_menu-clr-bg);
+  background-color: var(--_menu-clr-accent);
+}
+
+.accentedTx {
+  color: var(--_menu-clr-accent);
+  background-color: var(--_menu-clr-bg);
+}
+
+.category {
+  margin-bottom: 1rem;
+}

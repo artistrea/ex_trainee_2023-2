@@ -18,5 +18,5 @@ export default async function handler(
   if (session.user.role === "super_admin")
     return res.status(200).redirect("/super_admin");
 
-  return res.status(200).redirect("/dashboard");
+  return res.status(200).redirect(`/admin/${session.user.restaurantSlug}`);
 }
