@@ -57,7 +57,7 @@ model CategoryItem {
   description  String
   className    String @default("normal")
 
-  category   MenuCategory? @relation(fields: [categoryId], references: [id])
+  category   MenuCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId Int?
 }
 

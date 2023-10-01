@@ -8,6 +8,7 @@ import CategoryItemDialog from "../CategoryItemDialog";
 import { Edit, Edit2, Edit3, Trash, Trash2, Trash2Icon } from "lucide-react";
 import CategoryDialog from "../CategoryDialog";
 import { updateCategory } from "@/clientApi/updateCategory";
+import { deleteCategory } from "@/clientApi/deleteCategory";
 
 type RestaurantMenuProps = {
   editable?: boolean;
@@ -109,7 +110,21 @@ function CategoryTitle({
             });
         }}
         onDelete={() => {
-          alert("TODO");
+          if (
+            window.confirm(
+              `Essa ação também irá deletar todos os pratos da categoria! Tem certeza que deseja deletar a categoria ${category.title}?`
+            )
+          ) {
+            deleteCategory(category.id)
+              .then(() => {
+                alert("Deletado com sucesso!");
+                forceRerender && forceRerender();
+              })
+              .catch((err) => {
+                if (err.response?.data?.error) alert(err.response.data.error);
+                else alert("Erro ao deletar...");
+              });
+          }
         }}
       >
         <button className={styles.editIcon} style={{ marginTop: "2.4rem" }}>
