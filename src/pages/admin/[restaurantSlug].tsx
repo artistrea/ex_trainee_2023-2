@@ -39,11 +39,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
     .findUnique({
       where: { slug: restaurantSlug },
       include: {
-        menu: {
-          select: {
-            id: true,
-          },
-        },
         canLogIn: {
           select: {
             email: true,
@@ -52,8 +47,6 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
       },
     })
     .catch(() => null);
-
-  type R = typeof restaurant;
 
   if (!restaurant) {
     return {

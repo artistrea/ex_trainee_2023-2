@@ -55,7 +55,6 @@ export default async function handler(
 
       return res.status(200).json(restaurant);
     } catch (e) {
-      console.log(JSON.stringify(e));
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         if (e.code === "P2025") {
           return res.status(404).json({ error: "Restaurant not found" });

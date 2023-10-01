@@ -12,9 +12,6 @@ async function googleCallback(profile: GoogleProfile) {
     })
     .catch(() => false);
 
-  console.log("canLogIn", canLogIn);
-  console.log("profile", profile);
-
   if (canLogIn || profile.email.endsWith("@struct.unb.br")) {
     return profile.email_verified;
   }
@@ -66,8 +63,6 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, user }) {
       if (session.user) session.user.role = user.role;
-
-      console.log("user", user);
 
       if (session.user)
         session.user.restaurantSlug =

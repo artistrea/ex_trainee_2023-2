@@ -13,5 +13,7 @@ export default function AdminRestaurantMenu() {
     alert(err);
   });
 
+  console.log(restaurantSlug);
+
   return <RestaurantMenu restaurant={restaurant} editable />;
 }

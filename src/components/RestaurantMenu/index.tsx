@@ -1,6 +1,7 @@
 import { RoutesOutput } from "@/clientApi/routeOutputs";
 import styles from "./styles.module.css";
-import { CategoryItem, MenuCategory } from "@prisma/client";
+import { CategoryItem, MenuPageCategory } from "@prisma/client";
+import DialogDemo from "../Dialog";
 
 type RestaurantMenuProps = {
   editable?: boolean;
@@ -10,31 +11,38 @@ type RestaurantMenuProps = {
 export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
   // alert(JSON.stringify(restaurant));
 
-  if (!restaurant || !restaurant.menu) return <>Loading</>;
+  if (!restaurant || !restaurant.menuPages) return <>Loading</>;
 
-  const menu = restaurant.menu;
-  const categories = menu.categories;
+  const menuPages = restaurant.menuPages;
 
   return (
     <section className={styles.defaultStyles}>
+      <DialogDemo />
       <h2>Cardápio</h2>
       <ul className={styles.menu}>
-        {categories.map((category) => (
-          <li className={styles.category}>
-            <h3 className={styles[category.titleClassName]}>
-              {category.title}
+        {menuPages.map((menuPage) => (
+          <li className={`${styles.menuPage} ${styles[menuPage.className]}`}>
+            <h3 className={styles[menuPage.titleClassName]}>
+              {menuPage.title}
             </h3>
             <ul>
-              {category.items.map((item) => (
-                <li className={`${styles.item} ${styles[item.className]}`}>
-                  <Item item={item} />
+              {menuPage.categories.map((category) => (
+                <li className={styles.category}>
+                  <h4>{category.title}</h4>
+                  <ul>
+                    {category.items.map((item) => (
+                      <li className={styles.item}>
+                        <Item item={item} />
+                      </li>
+                    ))}
+                  </ul>
                 </li>
               ))}
             </ul>
           </li>
         ))}
       </ul>
-      <pre>{JSON.stringify(categories, null, 2)}</pre>
+      <pre>{JSON.stringify(menuPages, null, 2)}</pre>
     </section>
   );
 }
@@ -54,4 +62,4 @@ function Item({ item }: { item: CategoryItem }) {
   );
 }
 
-function Category({ category }: { category: MenuCategory }) {}
+function Category({ category }: { category: MenuPageCategory }) {}

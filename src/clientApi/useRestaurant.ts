@@ -10,13 +10,14 @@ export function useRestaurant(
     useState<RoutesOutput["restaurants"]["slug"]["GET"]>();
 
   useEffect(() => {
-    axios
-      .get(`/api/restaurants/${restaurantSlug}`)
-      .then(({ data }) => {
-        setData(data);
-      })
-      .catch(onError);
-  }, []);
+    if (restaurantSlug)
+      axios
+        .get(`/api/restaurants/${restaurantSlug}`)
+        .then(({ data }) => {
+          setData(data);
+        })
+        .catch(onError);
+  }, [restaurantSlug]);
 
   return { data };
 }

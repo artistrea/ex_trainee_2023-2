@@ -1,20 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { CategoryItem, Menu, MenuCategory, Restaurant } from "@prisma/client";
+import {
+  CategoryItem,
+  MenuPage,
+  MenuPageCategory,
+  Restaurant,
+} from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 type RestaurantWithFullMenu = {
-  menu:
-    | (Menu & {
-        categories: (MenuCategory & {
+  menuPages:
+    | (MenuPage & {
+        categories: (MenuPageCategory & {
           items: CategoryItem[];
         })[];
-      })
+      })[]
     | null;
 } & Restaurant;
 
 export type RouteOutput = {
   GET: RestaurantWithFullMenu;
-  PATCH: Menu;
+  PATCH: MenuPage;
 };
 
 type DataReturned = RouteOutput[keyof RouteOutput] | { error: string };
@@ -31,7 +36,7 @@ export default async function handler(
       .findUnique({
         where: { slug: slugString },
         include: {
-          menu: {
+          menuPages: {
             include: {
               categories: {
                 include: {

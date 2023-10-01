@@ -9,6 +9,8 @@
   --clr-text-accent: var(--clr-background);
 
   scroll-behavior: smooth;
+
+  font-family: Popins, sans-serif;
 }
 
 #__next {
