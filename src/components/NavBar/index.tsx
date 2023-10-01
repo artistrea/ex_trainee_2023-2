@@ -12,7 +12,7 @@ export function NavBar() {
     <nav className={styles.nav}>
       <div>
         <Link href="/">
-          <Image height={40} width={100} src="/next.svg" alt="Logo" />
+          <Image height={40} width={40} src="/avatar.png" alt="Logo" />
         </Link>
       </div>
 
@@ -21,7 +21,7 @@ export function NavBar() {
         <Link href="/#whyUs">Por que nós?</Link>
       </div>
       {session ? (
-        <div>
+        <div className={styles.navRight}>
           <Link
             href={`/admin/${session?.user.restaurantSlug}`}
             style={{

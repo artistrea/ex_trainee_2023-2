@@ -1,9 +1,9 @@
 :root {
   --clr-text: rgb(5, 3, 21);
-  --clr-background: rgb(251, 251, 254);
+  --clr-background: hsl(71, 73%, 99%);
   --clr-primary: rgb(47, 39, 206);
-  --clr-secondary: rgb(222, 220, 255);
-  --clr-accent: rgb(97, 134, 140);
+  --clr-secondary: hsl(243, 100%, 93%);
+  --clr-accent: hsl(22, 78%, 55%);
 
   --clr-text-primary: var(--clr-background);
   --clr-text-accent: var(--clr-background);

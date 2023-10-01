@@ -6,6 +6,19 @@
   background-color: var(--clr-secondary);
 }
 
+.nav a {
+  height: max-content;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  padding-block: 0.5rem;
+}
+
+.navRight {
+  display: flex;
+  gap: 2rem;
+}
+
 .navMid {
   display: none;
 }
