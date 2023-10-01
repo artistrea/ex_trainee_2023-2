@@ -1,7 +1,8 @@
 import { RoutesOutput } from "@/clientApi/routeOutputs";
 import styles from "./styles.module.css";
-import { CategoryItem, MenuPageCategory } from "@prisma/client";
-import DialogDemo from "../Dialog";
+import { CategoryItem } from "@prisma/client";
+import Link from "next/link";
+import GoBack from "../GoBack";
 
 type RestaurantMenuProps = {
   editable?: boolean;
@@ -9,57 +10,82 @@ type RestaurantMenuProps = {
 };
 
 export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
-  // alert(JSON.stringify(restaurant));
+  if (!restaurant || !restaurant.menu) return <>Loading</>;
 
-  if (!restaurant || !restaurant.menuPages) return <>Loading</>;
-
-  const menuPages = restaurant.menuPages;
+  const menu = restaurant.menu;
 
   return (
-    <section className={styles.defaultStyles}>
-      <DialogDemo />
-      <h2>Cardápio</h2>
-      <ul className={styles.menu}>
-        {menuPages.map((menuPage) => (
-          <li className={`${styles.menuPage} ${styles[menuPage.className]}`}>
-            <h3 className={styles[menuPage.titleClassName]}>
-              {menuPage.title}
-            </h3>
-            <ul>
-              {menuPage.categories.map((category) => (
-                <li className={styles.category}>
-                  <h4>{category.title}</h4>
-                  <ul>
-                    {category.items.map((item) => (
-                      <li className={styles.item}>
-                        <Item item={item} />
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
+    <section className={`${styles.defaultStyles}`}>
+      <h2 id="cardapio">Cardápio</h2>
+      <div className={`${styles.menu}`}>
+        <div className={styles.categoriesList}>
+          <GoBack
+            to="#cardapio"
+            text="Voltar para categorias"
+            className={styles.backButton}
+          />
+          {menu.categories.map((category) => (
+            <ul className={`${styles[menu.className]} ${styles.category}`}>
+              <>
+                <h3
+                  id={category.title}
+                  className={styles[category.titleClassName]}
+                >
+                  {category.title}
+                </h3>
+                <p>{category.description}</p>
+                <br />
+                <br />
+                {category.items.map((item) => (
+                  <>
+                    <div className={styles.separator} />
+                    <li className={styles.item}>
+                      <Item item={item} />
+                    </li>
+                  </>
+                ))}
+              </>
             </ul>
-          </li>
-        ))}
-      </ul>
-      <pre>{JSON.stringify(menuPages, null, 2)}</pre>
+          ))}
+        </div>
+        <aside className={`${styles.inverted} ${styles.categoriesMenu}`}>
+          <ul>
+            {menu.categories.map((category) => (
+              <li>
+                <Link className={styles.link} href={`#${category.title}`}>
+                  <h3>{category.title}</h3>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+      {/* <pre>{JSON.stringify(menu, null, 2)}</pre> */}
     </section>
   );
 }
 
-function Item({ item }: { item: CategoryItem }) {
-  return (
+function Item({ item, editable }: { item: CategoryItem; editable?: boolean }) {
+  return editable ? (
+    <></>
+  ) : (
     <>
-      <h4>{item.name}</h4>
-      <p>
-        {(item.priceInCents / 100).toLocaleString("pt-BR", {
-          currency: "BRL",
-          style: "currency",
-        })}
-      </p>
+      <span
+        style={{
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+        }}
+      >
+        <h4>{item.name}</h4>
+        <p>
+          {(item.priceInCents / 100).toLocaleString("pt-BR", {
+            currency: "BRL",
+            style: "currency",
+          })}
+        </p>
+      </span>
       <p>{item.description}</p>
     </>
   );
 }
-
-function Category({ category }: { category: MenuPageCategory }) {}
