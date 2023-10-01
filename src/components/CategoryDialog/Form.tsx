@@ -45,7 +45,7 @@ export function CategoryForm({
           value={category.description ?? ""}
           onChange={(e) => handleChange("description", e.target.value)}
         />
-        <button className="btn btn-primary">{submitText}</button>
+        <button className="btn btn-warning">{submitText}</button>
       </fieldset>
     </form>
   );

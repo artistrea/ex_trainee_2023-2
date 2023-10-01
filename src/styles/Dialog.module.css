@@ -7,6 +7,11 @@
   animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.DialogOverlay,
+.DialogContent {
+  z-index: 999;
+}
+
 .DialogContent {
   background-color: white;
   border-radius: 6px;
@@ -91,6 +96,10 @@
 }
 .Input:focus {
   box-shadow: 0 0 0 2px var(--violet-8);
+}
+
+.fullWidth {
+  width: 100%;
 }
 
 @keyframes overlayShow {

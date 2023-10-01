@@ -5,6 +5,18 @@
   --clr-secondary: hsl(243, 100%, 93%);
   --clr-accent: hsl(22, 78%, 55%);
 
+  --clr-danger: hsl(0, 100%, 50%);
+  --clr-success: hsl(120, 100%, 25%);
+  --clr-warning: hsl(45, 100%, 47%);
+
+  --clr-danger-light: hsl(0, 100%, 85%);
+  --clr-success-light: hsl(120, 100%, 85%);
+  --clr-warning-light: hsl(45, 100%, 85%);
+
+  --clr-danger-lighter: hsl(0, 100%, 90%);
+  --clr-success-lighter: hsl(120, 100%, 90%);
+  --clr-warning-lighter: hsl(45, 100%, 90%);
+
   --clr-text-primary: var(--clr-background);
   --clr-text-accent: var(--clr-background);
 
@@ -53,13 +65,42 @@ button {
 }
 
 .btn {
+  display: flex;
+  align-items: end;
+  position: relative;
+  justify-content: center;
+  gap: 1rem;
   border: none;
   border-radius: 99vmax;
   font-weight: 600;
   padding: 1rem 2rem;
 }
 
-.btn {
+.btn-danger {
+  background-color: var(--clr-danger-light);
+  color: var(--clr-danger);
+}
+.btn-danger:hover {
+  background-color: var(--clr-danger-lighter);
+}
+
+.btn-success {
+  background-color: var(--clr-success-light);
+  color: var(--clr-success);
+}
+.btn-success:hover {
+  background-color: var(--clr-success-lighter);
+}
+
+.btn-warning {
+  background-color: var(--clr-warning-light);
+  color: var(--clr-warning);
+}
+.btn-warning:hover {
+  background-color: var(--clr-warning-lighter);
+}
+
+.btn-primary {
   background-color: var(--clr-primary);
   color: var(--clr-text-primary);
 }

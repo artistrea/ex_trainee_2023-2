@@ -84,6 +84,9 @@ function CategoryTitle({
         onSubmit={() => {
           alert("TODO");
         }}
+        onDelete={() => {
+          alert("TODO");
+        }}
       >
         <button className={styles.editIcon} style={{ marginTop: "2.4rem" }}>
           <Edit3 />
@@ -113,6 +116,9 @@ function Item({ item, editable }: { item: CategoryItem; editable?: boolean }) {
         setItem={setItemForm as any}
         submitText="Salvar"
         onSubmit={() => {
+          alert("TODO");
+        }}
+        onDelete={() => {
           alert("TODO");
         }}
       >
