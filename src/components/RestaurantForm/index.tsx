@@ -1,6 +1,6 @@
 import type { Restaurant, Prisma } from "@prisma/client";
 import type { Dispatch, SetStateAction } from "react";
-import styles from "./styles.module.css";
+import styles from "@/styles/Forms.module.css";
 
 type Props = {
   restaurant: Prisma.RestaurantCreateInput | Restaurant;
@@ -58,7 +58,7 @@ export function RestaurantForm({
             }))
           }
         />
-        <button className="btn">{submitText}</button>
+        <button className="btn btn-primary">{submitText}</button>
       </fieldset>
     </form>
   );

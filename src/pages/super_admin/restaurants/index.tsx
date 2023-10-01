@@ -101,7 +101,7 @@ export default function SuperAdminRestaurants() {
           })}
         </ul>
         <Link className={styles.center} href="/super_admin/restaurants/create">
-          <button className="btn">Adicione um restaurante</button>
+          <button className="btn btn-primary">Adicione um restaurante</button>
         </Link>
       </section>
     </main>

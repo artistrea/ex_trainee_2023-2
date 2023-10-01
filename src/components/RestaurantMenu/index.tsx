@@ -1,8 +1,12 @@
 import { RoutesOutput } from "@/clientApi/routeOutputs";
 import styles from "./styles.module.css";
-import { CategoryItem } from "@prisma/client";
+import { CategoryItem, MenuCategory } from "@prisma/client";
 import Link from "next/link";
 import GoBack from "../GoBack";
+import { useState } from "react";
+import CategoryItemDialog from "../CategoryItemDialog";
+import { Edit, Edit2, Edit3, Trash, Trash2, Trash2Icon } from "lucide-react";
+import CategoryDialog from "../CategoryDialog";
 
 type RestaurantMenuProps = {
   editable?: boolean;
@@ -27,12 +31,7 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
           {menu.categories.map((category) => (
             <ul className={`${styles[menu.className]} ${styles.category}`}>
               <>
-                <h3
-                  id={category.title}
-                  className={styles[category.titleClassName]}
-                >
-                  {category.title}
-                </h3>
+                <CategoryTitle editable={editable} category={category} />
                 <p>{category.description}</p>
                 <br />
                 <br />
@@ -40,7 +39,7 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
                   <>
                     <div className={styles.separator} />
                     <li className={styles.item}>
-                      <Item item={item} />
+                      <Item editable={editable} item={item} />
                     </li>
                   </>
                 ))}
@@ -65,9 +64,65 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
   );
 }
 
-function Item({ item, editable }: { item: CategoryItem; editable?: boolean }) {
+function CategoryTitle({
+  category,
+  editable,
+}: {
+  category: MenuCategory;
+  editable?: boolean;
+}) {
+  const [categoryForm, setCategoryForm] = useState(category);
+
   return editable ? (
-    <></>
+    <div style={{ display: "contents", position: "relative" }}>
+      <CategoryDialog
+        title="Edite a categoria."
+        description="Edite o prato e clique em 'salvar' quando terminar"
+        category={categoryForm}
+        setCategory={setCategoryForm as any}
+        submitText="Salvar"
+        onSubmit={() => {
+          alert("TODO");
+        }}
+      >
+        <button className={styles.editIcon} style={{ marginTop: "2.4rem" }}>
+          <Edit3 />
+        </button>
+      </CategoryDialog>
+
+      <CategoryTitle category={category} />
+    </div>
+  ) : (
+    <>
+      <h3 id={category.title} className={styles[category.titleClassName]}>
+        {category.title}
+      </h3>
+    </>
+  );
+}
+
+function Item({ item, editable }: { item: CategoryItem; editable?: boolean }) {
+  const [itemForm, setItemForm] = useState(item);
+
+  return editable ? (
+    <>
+      <CategoryItemDialog
+        title="Edite o prato."
+        description="Edite o prato e clique em 'salvar' quando terminar"
+        item={itemForm}
+        setItem={setItemForm as any}
+        submitText="Salvar"
+        onSubmit={() => {
+          alert("TODO");
+        }}
+      >
+        <button className={styles.editIcon}>
+          <Edit3 />
+        </button>
+      </CategoryItemDialog>
+
+      <Item item={item} />
+    </>
   ) : (
     <>
       <span

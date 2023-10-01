@@ -47,11 +47,16 @@ textarea {
 }
 
 button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btn {
   border: none;
   border-radius: 99vmax;
   font-weight: 600;
   padding: 1rem 2rem;
-  cursor: pointer;
 }
 
 .btn {

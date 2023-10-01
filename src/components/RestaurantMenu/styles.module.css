@@ -163,3 +163,14 @@
 .category {
   margin-bottom: 1rem;
 }
+
+.editIcon {
+  position: absolute;
+  left: 0px;
+}
+
+.removeIcon {
+  position: absolute;
+  left: 0px;
+  margin-top: 10px;
+}

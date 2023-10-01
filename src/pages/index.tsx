@@ -192,7 +192,7 @@ export default function Home() {
                 }
                 placeholder="Message"
               />
-              <button className="btn">
+              <button className="btn btn-primary">
                 Veja como é criar seu cardápio conosco
               </button>
               <div className={styles.contactDetails}>
