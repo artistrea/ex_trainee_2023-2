@@ -7,13 +7,19 @@ import { useState } from "react";
 import CategoryItemDialog from "../CategoryItemDialog";
 import { Edit, Edit2, Edit3, Trash, Trash2, Trash2Icon } from "lucide-react";
 import CategoryDialog from "../CategoryDialog";
+import { updateCategory } from "@/clientApi/updateCategory";
 
 type RestaurantMenuProps = {
   editable?: boolean;
   restaurant?: RoutesOutput["restaurants"]["slug"]["GET"];
+  forceRerender?: () => void;
 };
 
-export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
+export function RestaurantMenu({
+  restaurant,
+  editable,
+  forceRerender,
+}: RestaurantMenuProps) {
   if (!restaurant || !restaurant.menu) return <>Loading</>;
 
   const menu = restaurant.menu;
@@ -31,7 +37,11 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
           {menu.categories.map((category) => (
             <ul className={`${styles[menu.className]} ${styles.category}`}>
               <>
-                <CategoryTitle editable={editable} category={category} />
+                <CategoryTitle
+                  forceRerender={forceRerender}
+                  editable={editable}
+                  category={category}
+                />
                 <p>{category.description}</p>
                 <br />
                 <br />
@@ -39,7 +49,11 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
                   <>
                     <div className={styles.separator} />
                     <li className={styles.item}>
-                      <Item editable={editable} item={item} />
+                      <Item
+                        forceRerender={forceRerender}
+                        editable={editable}
+                        item={item}
+                      />
                     </li>
                   </>
                 ))}
@@ -67,22 +81,32 @@ export function RestaurantMenu({ restaurant, editable }: RestaurantMenuProps) {
 function CategoryTitle({
   category,
   editable,
+  forceRerender,
 }: {
   category: MenuCategory;
   editable?: boolean;
+  forceRerender?: () => void;
 }) {
   const [categoryForm, setCategoryForm] = useState(category);
 
   return editable ? (
     <div style={{ display: "contents", position: "relative" }}>
       <CategoryDialog
-        title="Edite a categoria."
+        title={`Edite a categoria ${category.title}.`}
         description="Edite o prato e clique em 'salvar' quando terminar"
         category={categoryForm}
         setCategory={setCategoryForm as any}
         submitText="Salvar"
         onSubmit={() => {
-          alert("TODO");
+          updateCategory(categoryForm)
+            .then(() => {
+              alert("Atualizado com sucesso!");
+              forceRerender && forceRerender();
+            })
+            .catch((err) => {
+              if (err.response?.data?.error) alert(err.response.data.error);
+              else alert("Erro ao atualizar...");
+            });
         }}
         onDelete={() => {
           alert("TODO");
@@ -104,7 +128,14 @@ function CategoryTitle({
   );
 }
 
-function Item({ item, editable }: { item: CategoryItem; editable?: boolean }) {
+function Item({
+  item,
+  editable,
+}: {
+  item: CategoryItem;
+  editable?: boolean;
+  forceRerender?: () => void;
+}) {
   const [itemForm, setItemForm] = useState(item);
 
   return editable ? (

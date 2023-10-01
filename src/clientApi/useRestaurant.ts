@@ -8,6 +8,7 @@ export function useRestaurant(
 ) {
   const [data, setData] =
     useState<RoutesOutput["restaurants"]["slug"]["GET"]>();
+  const [forceRefetch, setForceRefetch] = useState(0);
 
   useEffect(() => {
     if (restaurantSlug)
@@ -17,7 +18,11 @@ export function useRestaurant(
           setData(data);
         })
         .catch(onError);
-  }, [restaurantSlug]);
+  }, [restaurantSlug, forceRefetch]);
 
-  return { data };
+  function refetch() {
+    setForceRefetch((prev) => prev + 1);
+  }
+
+  return { data, refetch };
 }

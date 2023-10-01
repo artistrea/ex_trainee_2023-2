@@ -15,9 +15,12 @@ export default function AdminRestaurantMenu() {
   const restaurantSlugString =
     typeof restaurantSlug === "string" ? restaurantSlug : "";
 
-  const { data: restaurant } = useRestaurant(restaurantSlugString, (err) => {
-    alert(err);
-  });
+  const { data: restaurant, refetch } = useRestaurant(
+    restaurantSlugString,
+    (err) => {
+      alert(err);
+    }
+  );
 
   console.log(restaurantSlug);
 
@@ -37,7 +40,12 @@ export default function AdminRestaurantMenu() {
           <EditIcon /> {editing ? "Desabilitar Edição" : "Habilitar Edição"}
         </span>
       </button>
-      <RestaurantMenu restaurant={restaurant} editable={editing} />;
+      <RestaurantMenu
+        forceRerender={refetch}
+        restaurant={restaurant}
+        editable={editing}
+      />
+      ;
     </>
   );
 }
