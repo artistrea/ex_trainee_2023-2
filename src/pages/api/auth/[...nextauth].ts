@@ -12,6 +12,9 @@ async function googleCallback(profile: GoogleProfile) {
     })
     .catch(() => false);
 
+  console.log("canLogIn", canLogIn);
+  console.log("profile", profile);
+
   if (canLogIn || profile.email.endsWith("@struct.unb.br")) {
     return profile.email_verified;
   }
@@ -42,7 +45,7 @@ export const authOptions: NextAuthOptions = {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
-          emailVerified: null,
+          emailVerified: profile.email_verified ? new Date() : null,
           image: profile.picture,
           role: profile.email.endsWith("@struct.unb.br")
             ? "super_admin"
@@ -63,17 +66,22 @@ export const authOptions: NextAuthOptions = {
 
     async session({ session, user }) {
       if (session.user) session.user.role = user.role;
+
+      console.log("user", user);
+
       if (session.user)
         session.user.restaurantSlug =
           (
-            await prisma.restaurant.findUnique({
-              where: {
-                id: user.restaurantId ?? undefined,
-              },
-              select: {
-                slug: true,
-              },
-            })
+            await prisma.restaurant
+              .findUnique({
+                where: {
+                  id: user.restaurantId ?? undefined,
+                },
+                select: {
+                  slug: true,
+                },
+              })
+              .catch(() => null)
           )?.slug || null;
 
       return session;

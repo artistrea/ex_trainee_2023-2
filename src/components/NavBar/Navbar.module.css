@@ -18,6 +18,6 @@
 }
 
 .navMid a {
-  color: var(--clr-primary);
+  color: var(--clr-accent);
   text-decoration: none;
 }
