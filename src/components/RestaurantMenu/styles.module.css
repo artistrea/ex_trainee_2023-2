@@ -26,6 +26,11 @@
   padding-block: var(--section-padding-block);
 }
 
+.category > p {
+  padding-inline: var(--section-padding);
+  padding-block: var(--section-padding-small);
+}
+
 .defaultStyles .item > p {
   padding-inline: var(--section-padding-small);
   padding-block: var(--section-padding-block);
@@ -121,7 +126,6 @@
   border-left: 8px solid var(--_menu-clr-text);
 }
 
-.category,
 .menu {
   border-radius: 1.5rem 1.5rem;
   overflow: clip;
