@@ -1,4 +1,4 @@
-import { RoutesOutput } from "./routeOutputs";
+import { RoutesOutput } from "../routeOutputs";
 import { Prisma } from "@prisma/client";
 import axios, { AxiosPromise } from "axios";
 

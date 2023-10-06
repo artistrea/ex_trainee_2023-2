@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { FormEvent, useEffect, useState } from "react";
-import { createContact } from "@/clientApi/createContact";
+import { createContact } from "@/clientApi/contacts/createContact";
 import Image from "next/image";
 
 const exampleImages = [

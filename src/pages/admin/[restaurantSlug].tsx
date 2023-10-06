@@ -11,7 +11,7 @@ import { RestaurantForm } from "@/components/RestaurantForm";
 import { Restaurant } from "@prisma/client";
 import { EditIcon } from "lucide-react";
 import Link from "next/link";
-import { updateRestaurant } from "@/clientApi/updateRestaurant";
+import { updateRestaurant } from "@/clientApi/restaurants/updateRestaurant";
 import { AxiosError } from "axios";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {

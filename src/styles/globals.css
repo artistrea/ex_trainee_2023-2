@@ -77,27 +77,27 @@ button {
 }
 
 .btn-danger {
-  background-color: var(--clr-danger-light);
+  background-color: var(--clr-danger-lighter);
   color: var(--clr-danger);
 }
 .btn-danger:hover {
-  background-color: var(--clr-danger-lighter);
+  background-color: var(--clr-danger-light);
 }
 
 .btn-success {
-  background-color: var(--clr-success-light);
+  background-color: var(--clr-success-lighter);
   color: var(--clr-success);
 }
 .btn-success:hover {
-  background-color: var(--clr-success-lighter);
+  background-color: var(--clr-success-light);
 }
 
 .btn-warning {
-  background-color: var(--clr-warning-light);
+  background-color: var(--clr-warning-lighter);
   color: var(--clr-warning);
 }
 .btn-warning:hover {
-  background-color: var(--clr-warning-lighter);
+  background-color: var(--clr-warning-light);
 }
 
 .btn-primary {

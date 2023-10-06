@@ -1,5 +1,5 @@
 import styles from "@/styles/Admin.module.css";
-import { useRestaurants } from "@/clientApi/useRestaurants";
+import { useRestaurants } from "@/clientApi/restaurants/useRestaurants";
 import GoBack from "@/components/GoBack";
 import Link from "next/link";
 import { ArrowRightSquare } from "lucide-react";

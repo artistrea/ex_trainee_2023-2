@@ -5,10 +5,10 @@ import Link from "next/link";
 import GoBack from "../GoBack";
 import { useState } from "react";
 import CategoryItemDialog from "../CategoryItemDialog";
-import { Edit, Edit2, Edit3, Trash, Trash2, Trash2Icon } from "lucide-react";
+import { Edit3 } from "lucide-react";
 import CategoryDialog from "../CategoryDialog";
-import { updateCategory } from "@/clientApi/updateCategory";
-import { deleteCategory } from "@/clientApi/deleteCategory";
+import { updateCategory } from "@/clientApi/categories/updateCategory";
+import { deleteCategory } from "@/clientApi/categories/deleteCategory";
 
 type RestaurantMenuProps = {
   editable?: boolean;
@@ -89,10 +89,13 @@ function CategoryTitle({
   forceRerender?: () => void;
 }) {
   const [categoryForm, setCategoryForm] = useState(category);
+  const [open, setOpen] = useState(false);
 
   return editable ? (
     <div style={{ display: "contents", position: "relative" }}>
       <CategoryDialog
+        open={open}
+        setOpen={setOpen}
         title={`Edite a categoria ${category.title}.`}
         description="Edite o prato e clique em 'salvar' quando terminar"
         category={categoryForm}
@@ -103,6 +106,7 @@ function CategoryTitle({
             .then(() => {
               alert("Atualizado com sucesso!");
               forceRerender && forceRerender();
+              setOpen(false);
             })
             .catch((err) => {
               if (err.response?.data?.error) alert(err.response.data.error);

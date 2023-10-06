@@ -4,7 +4,7 @@ import GoBack from "@/components/GoBack";
 import { RestaurantForm } from "@/components/RestaurantForm";
 import { useState } from "react";
 import { type Prisma } from "@prisma/client";
-import { createRestaurant } from "@/clientApi/createRestaurant";
+import { createRestaurant } from "@/clientApi/restaurants/createRestaurant";
 import { useRouter } from "next/router";
 
 function CreateRestaurantPage() {

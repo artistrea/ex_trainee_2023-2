@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 import Link from "next/link";
-import { useRestaurants } from "@/clientApi/useRestaurants";
+import { useRestaurants } from "@/clientApi/restaurants/useRestaurants";
 import styles from "@/styles/Admin.module.css";
 import { ArrowRightSquare } from "lucide-react";
 import { useState } from "react";

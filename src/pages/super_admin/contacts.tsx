@@ -1,7 +1,7 @@
 export { getServerSideProps } from "./";
 
 import styles from "@/styles/Admin.module.css";
-import { useContacts } from "@/clientApi/useContacts";
+import { useContacts } from "@/clientApi/contacts/useContacts";
 import GoBack from "@/components/GoBack";
 
 export default function ContactsPage() {

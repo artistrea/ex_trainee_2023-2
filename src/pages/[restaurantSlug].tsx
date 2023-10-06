@@ -1,4 +1,4 @@
-import { useRestaurant } from "@/clientApi/useRestaurant";
+import { useRestaurant } from "@/clientApi/restaurants/useRestaurant";
 import { RestaurantMenu } from "@/components/RestaurantMenu";
 import { useRouter } from "next/router";
 

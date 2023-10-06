@@ -1,4 +1,4 @@
-import { RoutesOutput } from "./routeOutputs";
+import { RoutesOutput } from "../routeOutputs";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
